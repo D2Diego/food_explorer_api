@@ -1,15 +1,21 @@
-const AppError = require('../utils/AppError')
+const AppError = require('../utils/AppError');
+
+const sqliteConnection = require("../database/sqlite");
+const knex = require('../database/knex');
 
 class UsersController {
-  create(request, response) {
-    const { name, email, password } = request.body
+  async create(request, response) {
+   const { name, email, password } = request.body;
 
-    if (!name) {
-      throw new AppError('Nome é obrigatório')
-    }
+   const database = await sqliteConnection();
+   const checkUsersExists = await knex('users').where({ email: email }).select('*')
 
-    response.status(201).json({ name, email, password })
+   if (checkUsersExists) {
+    throw new AppError('Este email já está em uso')
+  }
+
+    return response.status(201).json()
   }
 }
 
-module.exports = UsersController
+module.exports = UsersController;
