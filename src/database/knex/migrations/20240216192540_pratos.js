@@ -4,7 +4,7 @@ exports.up = function(knex) {
     table.increments('id').primary();
     table.string('nome').notNullable();
     table.integer('categoria_id').unsigned().references('id').inTable('categorias');
-    table.text('descrição');
+    table.text('descricao');
     table.decimal('preco', 10, 2).notNullable();
     table.string('path_image');
     table.timestamps(true, true);
