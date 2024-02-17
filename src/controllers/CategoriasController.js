@@ -17,6 +17,20 @@ class CategoriasController{
 
         return response.status(201).json()
     }
+
+    async delete (request, response){
+        const { id } = request.params;
+
+        const deleted = await knex('categorias').where({ id: id }).del();
+
+        if (deleted){
+            response.status(200).json({ message: "Categoria excluída com sucesso"});
+        } else {
+            response.status(404).json ({ message: "Categoria não encontrada"});
+        }
+
+
+    }
 }
 
 module.exports = CategoriasController;
