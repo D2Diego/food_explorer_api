@@ -9,4 +9,4 @@ const usersController = new UsersController()
 usersRoutes.get('/', usersController.create)
 usersRoutes.put('/:id', usersController.update)
 
-module.exports = usersRoutes
+module.exports = usersRoutes;
