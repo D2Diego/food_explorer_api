@@ -7,5 +7,6 @@ const ingredientesRoutes = Router();
 const ingredientesController = new IngredientesController();
 
 ingredientesRoutes.post('/', ingredientesController.create);
+ingredientesRoutes.delete('/:id', ingredientesController.delete);
 
 module.exports = ingredientesRoutes;

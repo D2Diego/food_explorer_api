@@ -22,6 +22,18 @@ class IngredientesController{
         return response.status(201).json({message: 'Ingediente criado com sucesso'});
     }
 
+        async delete(request, response){
+            const { id } = request.params;
+
+            const deleted = await knex('ingredientes').where({ id: id }).del();
+
+            if(deleted){
+                response.status(200).json({ message: 'Ingrediente excluido com sucesso'})
+            } else {
+                response.status(404).json({ message: 'Ingrediente não encontrado'})
+            }
+        }
+
 }
 
 module.exports = IngredientesController;
