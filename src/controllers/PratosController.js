@@ -64,6 +64,18 @@ class PratosController {
             return response.status(201).json({ id, message: 'Prato alterado com sucesso' });
         
     }
+
+    async delete(request, response){
+        const { id } =  request.params;
+
+        const deleted = await knex('prato').where({ id: id}).del();
+
+        if(deleted){
+            response.status(200).json({ message: 'Prato deletado com sucesso!'})
+        } else {
+            reponse.status(404).json({ message: 'Prato não encontrado'})
+        }
+    }
 }
 
 module.exports = PratosController;

@@ -26,7 +26,7 @@ class CategoriasController{
         if (deleted){
             response.status(200).json({ message: "Categoria excluída com sucesso"});
         } else {
-            response.status(404).json ({ message: "Categoria não encontrada"});
+            response.status(404).json({ message: "Categoria não encontrada"});
         }
 
 
