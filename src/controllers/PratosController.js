@@ -29,6 +29,41 @@ class PratosController {
             throw new AppError('Erro ao criar prato.');
         }
     }
+
+    async updated(request,response){
+        const { nome, categoria_id, descricao, preco, path_image } = request.body;
+        const { id } = request.params;
+
+        const prato = await knex('prato').where({id: id}).first();
+
+        if(!prato){
+            throw new AppError('Esse prato não existe!')
+        }
+        
+        prato.nome = nome ?? prato.nome;
+        prato.categoria_id = categoria_id ?? prato.categoria_id;
+        prato.descricao = descricao ?? prato.descricao;
+        prato.preco = preco ?? prato.preco;
+        prato.path_image = path_image ?? prato.path_image;
+
+
+        const precoFloat = parseFloat(preco);
+        if (isNaN(precoFloat)) {
+            throw new AppError('O preço deve ser um número válido.');
+        }
+
+            await knex('prato').update({
+                nome,
+                categoria_id,
+                descricao, 
+                preco: precoFloat,
+                path_image,
+                updated_at: knex.fn.now()
+            });
+
+            return response.status(201).json({ id, message: 'Prato alterado com sucesso' });
+        
+    }
 }
 
 module.exports = PratosController;
