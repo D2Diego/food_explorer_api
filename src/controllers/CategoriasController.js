@@ -1,4 +1,4 @@
-const AppError = require('../utils/AppError');
+const AppError = require ('../utils/AppError');
 const knex = require('../database/knex');
 
 class CategoriasController{

@@ -6,6 +6,6 @@ const pratoIngredientesRoutes = Router();
 
 const pratoIngredientesController = new PratoIngredientesController();
 
-pratoIngredientesRoutes.post('/', pratoIngredientesController.create);
+pratoIngredientesRoutes.get('/', pratoIngredientesController.create);
 
 module.exports = pratoIngredientesRoutes;
