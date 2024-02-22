@@ -65,6 +65,22 @@ class PratosController {
         
     }
 
+    async read(request, response){
+        const { id } = request.params;
+
+        try{
+            const prato = await knex('prato').where({ id }).first();
+
+            if(!prato){
+                throw new AppError('Prato não encontrado')
+            }
+
+            return response.json(prato)
+        } catch {
+            throw new AppError('Erro ao busucar prato', 500)
+        }
+    }
+
     async delete(request, response){
         const { id } =  request.params;
 
@@ -73,7 +89,7 @@ class PratosController {
         if(deleted){
             response.status(200).json({ message: 'Prato deletado com sucesso!'})
         } else {
-            reponse.status(404).json({ message: 'Prato não encontrado'})
+            reponse.status(404).json({ message: 'Prato não encontrado'}) 
         }
     }
 }
