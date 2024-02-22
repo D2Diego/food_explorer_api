@@ -50,9 +50,8 @@ class PratoIngredientesController{
       }
 
       async list(request, response) {
-        const { prato_id } = request.params; // Ou request.body, dependendo de como você está enviando
-    
-        // Verificação para garantir que prato_id foi fornecido
+        const { prato_id } = request.params; 
+        
         if (!prato_id) {
             return response.status(400).json({ message: 'O prato_id é necessário.' });
         }
