@@ -9,7 +9,8 @@ const categoriasRoutes = Router();
 
 const categoriasController = new CategoriasController();
 
-categoriasRoutes.get('/',ensureAutheticated,isAdmin, categoriasController.create);
+categoriasRoutes.post('/',ensureAutheticated,isAdmin, categoriasController.create);
 categoriasRoutes.delete('/:id',ensureAutheticated,isAdmin, categoriasController.delete);
+categoriasRoutes.get('/',ensureAutheticated,isAdmin, categoriasController.list);
 
 module.exports = categoriasRoutes;

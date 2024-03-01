@@ -31,6 +31,15 @@ class CategoriasController{
 
 
     }
+
+    async list (request, response){
+        try{
+            const categorias = await knex('categorias').select('*');
+            return response.json(categorias)
+        } catch (error) {
+            throw new AppError('Erro ao listar categorias', 500)
+        }
+    }
 }
 
 module.exports = CategoriasController;
