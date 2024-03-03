@@ -14,6 +14,12 @@ class PratoIngredientesController{
         if (!pratoExists) {
           throw new AppError('Prato não encontrado.', 404);
         }
+
+        const ingredientes = await knex('ingredientes').whereIn('id', ingrediente_ids);
+        
+          if (ingredientes.length !== ingrediente_ids.length) {
+          throw new AppError('Um ou mais ingredientes não foram encontrados.', 404);
+        }
       
         const pratoIngredientes = ingrediente_ids.map(ingrediente_id => ({
           prato_id,
