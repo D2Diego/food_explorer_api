@@ -12,6 +12,14 @@ class UsersController {
     throw new AppError('Este email já está em uso')
   }
 
+  if(!email.includes("@", ".") || !email.includes(".")) {
+    throw new AppError('Erro: Digite um email válido!');
+}
+
+if(password.length < 6) {
+    throw new AppError('Erro: A senha deve ter pelo menos 6 dígitos!');
+}
+
 
     const hashedPassword = await hash(password, 9)
 
@@ -44,7 +52,7 @@ class UsersController {
     user.email = email ?? user.email
 
     if(password && !old_password){
-      throw new AppError('Você precisa digitar a senha antiga')
+      throw new AppError('Você precisa informar a senha antiga para definir a nova senha')
     }
 
     if(password && old_password){
