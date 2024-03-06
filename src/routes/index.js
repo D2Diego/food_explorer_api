@@ -1,20 +1,25 @@
-// Router Import
 const { Router } = require('express');
 
-// Routes Import
 const usersRouter = require("./users.routes");
 const dishesRouter = require("./dishes.routes");
 const ordersRouter = require("./orders.routes");
 const sessionsRouter = require("./sessions.routes");
 
-// Initializing Router
 const routes = Router();
 
-// Application Routes
 routes.use("/users", usersRouter);
 routes.use("/dishes", dishesRouter);
 routes.use("/orders", ordersRouter);
 routes.use("/sessions", sessionsRouter);
 
-// Export
+routes.use((req, res, next) => {
+  res.status(404).json({ message: "Route not found" });
+});
+
+routes.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || "Internal Server Error";
+  res.status(statusCode).json({ message });
+});
+
 module.exports = routes;

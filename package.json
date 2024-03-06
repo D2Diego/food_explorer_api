@@ -1,7 +1,7 @@
 {
-  "name": "food-explorer-backend",
+  "name": "food-explorer-api",
   "version": "1.0.0",
-  "description": "API desenvolvida por André Viapiana para o Food Explorer",
+  "description": "Desafio final Explorer por Diego Marques",
   "main": "index.js",
   "scripts": {
     "start": "pm2-runtime start ecosystem.config.js --env production",
