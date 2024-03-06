@@ -1,37 +1,35 @@
 const knex = require("../database/knex");
-
-const AppError = require("../utils/AppError");
-const { compare } = require('bcryptjs');
-
-const authConfig = require("../config/auth");
+const authConfig = require("../configs/auth");
 const { sign } = require("jsonwebtoken");
+const AppError = require("../utils/AppError");
+const { compare } = require("bcryptjs");
 
 class SessionsController {
     async create(request, response) {
         const { email, password } = request.body;
-    
-        const user = await knex('users').where({ email }).first();
-    
+
+        const user = await knex("users").where({ email }).first();
+
         if (!user) {
-            throw new AppError('E-mail e/ou senha não autorizado', 401);
-        }
-    
-        const passwordMatched = await compare(password, user.password); 
-    
-        if (!passwordMatched) {
-            throw new AppError('E-mail e/ou senha incorreta', 401);
+            throw new AppError("E-mail e/ou senha incorretos", 401);
         }
 
-        const {secret, expiresIn } = authConfig.jwt;
+        const passwordMatched = await compare(password, user.password);
+
+        if (!passwordMatched) {
+            throw new AppError("E-mail e/ou senha incorretos", 401);
+        }
+
+        const { secret, expiresIn } = authConfig.jwt;
         const token = sign({}, secret, {
             subject: String(user.id),
-            expiresIn
-        })
+            expiresIn,
+        });
 
-    
-        return response.json({user, token});
+        const { password: _, ...userDataWithoutPassword } = user;
+
+        return response.status(201).json({ user: userDataWithoutPassword, token });
     }
-
 }
 
 module.exports = SessionsController;

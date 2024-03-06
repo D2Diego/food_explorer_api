@@ -24,20 +24,16 @@ class OrdersController {
         return response.status(201).json({ order_id });
     }
 
-    async update(request, response) {
-        const { id, orderStatus } = request.body;
-    
-        await knex("orders").update({ orderStatus }).where({ id });
-        
-        return response.send("Order updated successfully.");
-    }
-
     async index(request, response) {
         const user_id = request.user.id;
-
         const user = await knex("users").where({id: user_id}).first();
+
+        if (!user) {
+            return response.status(404).json({ message: "Usuário não encontrado" });
+        }
+
         let ordersQuery = knex("orders")
-            .join("ordersItems", "orders.id", "ordersItems.order_id")
+            .where({ user_id: user.isAdmin ? undefined : user_id })
             .select([
                 "orders.id",
                 "orders.user_id",
@@ -45,21 +41,27 @@ class OrdersController {
                 "orders.totalPrice",
                 "orders.paymentMethod",
                 "orders.created_at",
-            ]).groupBy("orders.id");
+            ]);
 
         if (!user.isAdmin) {
-            ordersQuery = ordersQuery.where({ user_id });
+            ordersQuery = ordersQuery.join("ordersItems", "orders.id", "ordersItems.order_id").groupBy("orders.id");
         }
 
         const orders = await ordersQuery;
-        const ordersItems = await knex("ordersItems");
+        for (let order of orders) {
+            const items = await knex("ordersItems").where({ order_id: order.id });
+            order.items = items;
+        }
 
-        const ordersWithItems = orders.map(order => ({
-            ...order,
-            items: ordersItems.filter(item => item.order_id === order.id)
-        }));
+        return response.status(200).json(orders);
+    }
 
-        return response.json(ordersWithItems);
+    async update(request, response) {
+        const { id, orderStatus } = request.body;
+
+        await knex("orders").update({ orderStatus }).where({ id });
+
+        return response.status(201).json({ message: "Pedido atualizado com sucesso." });
     }
 }
 

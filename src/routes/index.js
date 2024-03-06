@@ -1,19 +1,20 @@
-const { Router } = require('express')
+// Router Import
+const { Router } = require('express');
 
-const usersRoutes = require('./users.routes')
-const categoriasRoutes = require('./categorias.routes')
-const pratosRoutes = require('./pratos.routes')
-const ingredientesRoutes = require('./ingredientes.routes')
-const pratoIngredientesRoutes = require('./Pratoingredientes.routes')
-const sessionsRouter = require('./Sessions.routes')
+// Routes Import
+const usersRouter = require("./users.routes");
+const dishesRouter = require("./dishes.routes");
+const ordersRouter = require("./orders.routes");
+const sessionsRouter = require("./sessions.routes");
 
-const routes = Router()
-routes.use('/users', usersRoutes)
-routes.use('/categorias', categoriasRoutes)
-routes.use('/pratos', pratosRoutes)
-routes.use('/ingredientes', ingredientesRoutes)
-routes.use('/pratoingredientes', pratoIngredientesRoutes)
-routes.use('/sessions', sessionsRouter)
+// Initializing Router
+const routes = Router();
 
+// Application Routes
+routes.use("/users", usersRouter);
+routes.use("/dishes", dishesRouter);
+routes.use("/orders", ordersRouter);
+routes.use("/sessions", sessionsRouter);
 
-module.exports = routes
+// Export
+module.exports = routes;
