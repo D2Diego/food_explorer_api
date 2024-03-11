@@ -9,7 +9,7 @@
     "migrate": "knex migrate:latest"
   },
   "keywords": [],
-  "author": "André Viapiana",
+  "author": "Diego Marques",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
