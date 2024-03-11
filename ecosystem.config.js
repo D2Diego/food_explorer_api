@@ -1,7 +1,7 @@
 module.exports = {
   apps : [{
     name: "app",
-    script: "./server.js",
+    script: "./src/server",
     instances: "max",
     env: {
       NODE_ENV: "development",
@@ -11,3 +11,5 @@ module.exports = {
     }
   }]
 }
+
+const teste = require("./src/server")
