@@ -4,7 +4,7 @@ require("dotenv/config");
 const AppError = require("./utils/AppError");
 const express = require('express');
 
-const routes = require("./routes/index");
+const routes = require("./routes");
 const database = require("./database/sqlite");
 
 const uploadConfig = require("./configs/upload");
