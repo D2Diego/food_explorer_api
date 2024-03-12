@@ -1,9 +1,9 @@
-const caminhoServer = require("./server");
+const caminhoServer = require("./src/server");
 
 module.exports = {
   apps : [{
     name: "app",
-    script: caminhoServer,
+    script: "./src/server.js",
     instances: "max",
     env: {
       NODE_ENV: "development",
