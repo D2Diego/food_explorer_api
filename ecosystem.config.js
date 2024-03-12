@@ -1,5 +1,3 @@
-const caminhoServer = require("./src/server");
-
 module.exports = {
   apps : [{
     name: "app",
