@@ -2,10 +2,9 @@
   "name": "food-explorer-api",
   "version": "1.0.0",
   "description": "Desafio final Explorer por Diego Marques",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "pm2-runtime start ecosystem.config.js --env production",
-    "build": "npm install; npm run build",
     "dev": "nodemon ./src/server.js",
     "migrate": "knex migrate:latest"
   },
